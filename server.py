@@ -19,14 +19,13 @@ async def generate_graph(request: Request):
     # AUTHENTICATION
     # ==========================
 
-    client_key = request.headers.get("X-API-Key")
-
-    if not API_KEY or client_key != API_KEY:
+    authorization = request.headers.get("Authorization")
+    
+    if authorization != "Bearer " + API_KEY:
         raise HTTPException(
             status_code=401,
             detail="Unauthorized"
         )
-
 
     # ==========================================
     # RECEIVE CSV FROM WEMOS
